@@ -1,0 +1,196 @@
+/* ============================================================
+   Base / Reset
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f4f6f9;
+  color: #1a1a2e;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Hero (index.html)
+   ============================================================ */
+.hero {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 0.75rem;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* ============================================================
+   Accent colour
+   ============================================================ */
+.accent {
+  color: #2563eb;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-primary {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: #2563eb;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #2563eb;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #eff6ff;
+}
+
+/* ============================================================
+   Upload page layout
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: 640px;
+  padding: 2rem 1.5rem;
+}
+
+.upload-header {
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #1a1a2e;
+  letter-spacing: -0.5px;
+}
+
+.upload-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: #1a1a2e;
+}
+
+/* ============================================================
+   Form
+   ============================================================ */
+.upload-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #1a1a2e;
+  background: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  background: #fff;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input[type="file"] {
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+}
+
+/* ============================================================
+   Form actions
+   ============================================================ */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   Status message
+   ============================================================ */
+.status-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  min-height: 1.4rem;
+}
+
+.status-message.success { color: #16a34a; }
+.status-message.error   { color: #dc2626; }
