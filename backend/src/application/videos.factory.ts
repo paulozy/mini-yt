@@ -6,8 +6,10 @@ import { CreateVideoMetadataUseCase } from "./usecases/create-video-metadata.use
 export function makeVideosController(): VideosController {
   const dbInstance = DrizzleDatabase.getInstance().getDb();
 
+  const storageService = {} as any; // TODO: implement storage service and inject here
+
   const videosRepository = new DrizzleVideosRepository(dbInstance);
-  const createVideoMetadataUseCase = new CreateVideoMetadataUseCase(videosRepository as any);
+  const createVideoMetadataUseCase = new CreateVideoMetadataUseCase(videosRepository, storageService);
 
   return new VideosController(createVideoMetadataUseCase);
 }

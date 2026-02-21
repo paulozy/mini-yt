@@ -6,8 +6,12 @@ describe('Video Entity', () => {
     title: 'Test Video',
     description: 'Test Description',
     category: VideoCategory.TECHNOLOGY,
-    mimeType: 'video/mp4',
-    size: 1024,
+    videoFilename: 'test-video.mp4',
+    videoMimeType: 'video/mp4',
+    videoSize: 1024000,
+    thumbFilename: 'thumb.jpg',
+    thumbMimeType: 'image/jpeg',
+    thumbSize: 51200,
   };
 
   describe('create', () => {
@@ -18,8 +22,8 @@ describe('Video Entity', () => {
       expect(video.title).toBe('Test Video');
       expect(video.description).toBe('Test Description');
       expect(video.category).toBe(VideoCategory.TECHNOLOGY);
-      expect(video.mimeType).toBe('video/mp4');
-      expect(video.size).toBe(1024);
+      expect(video.videoMimeType).toBe('video/mp4');
+      expect(video.videoSize).toBe(1024000);
       expect(video.status).toBe(VideoStatus.UPLOADING);
       expect(video.tags).toEqual([]);
     });
@@ -73,8 +77,12 @@ describe('Video Entity', () => {
         id: '123',
         title: 'Test Video',
         category: VideoCategory.TECHNOLOGY,
-        mimeType: 'video/mp4',
-        size: 1024,
+        videoFilename: 'test-video.mp4',
+        videoMimeType: 'video/mp4',
+        videoSize: 1024000,
+        thumbFilename: 'thumb.jpg',
+        thumbMimeType: 'image/jpeg',
+        thumbSize: 51200,
       });
 
       expect(video.description).toBeUndefined();
@@ -102,14 +110,14 @@ describe('Video Entity', () => {
       expect(video.category).toBe(VideoCategory.TECHNOLOGY);
     });
 
-    it('should return mimeType', () => {
+    it('should return videoMimeType', () => {
       const video = Video.create(validProps);
-      expect(video.mimeType).toBe('video/mp4');
+      expect(video.videoMimeType).toBe('video/mp4');
     });
 
-    it('should return size', () => {
+    it('should return videoSize', () => {
       const video = Video.create(validProps);
-      expect(video.size).toBe(1024);
+      expect(video.videoSize).toBe(1024000);
     });
 
     it('should return uploadedAt', () => {
@@ -330,19 +338,19 @@ describe('Video Entity', () => {
       }).toThrow();
     });
 
-    it('should not allow changing mimeType', () => {
+    it('should not allow changing videoMimeType', () => {
       const video = Video.create(validProps);
 
       expect(() => {
-        (video as any).mimeType = 'video/avi';
+        (video as any).videoMimeType = 'video/avi';
       }).toThrow();
     });
 
-    it('should not allow changing size', () => {
+    it('should not allow changing videoSize', () => {
       const video = Video.create(validProps);
 
       expect(() => {
-        (video as any).size = 2048;
+        (video as any).videoSize = 2048000;
       }).toThrow();
     });
 

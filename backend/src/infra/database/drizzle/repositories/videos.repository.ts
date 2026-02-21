@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { LibSQLDatabase } from "drizzle-orm/libsql";
 import { Video } from "../../../../domain/entities/video.entity";
-import { IVideosRepository } from "../../../../domain/repositories/videos.repository";
+import { IVideosRepository } from "../../../../domain/repositories/videos-repository.interface";
 import { VideosMapper } from "../mappers/videos.mapper";
 import { videosTable } from "../schema";
 

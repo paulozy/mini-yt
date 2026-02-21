@@ -11,8 +11,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,typescript,testing",
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt: new Date("2024-01-01"),
         updatedAt: new Date("2024-01-02"),
         uploadedAt: new Date("2024-01-01T10:00:00"),
@@ -27,8 +33,14 @@ describe("VideosMapper", () => {
       expect(video.category).toBe(VideoCategory.EDUCATION);
       expect(video.tags).toEqual(["javascript", "typescript", "testing"]);
       expect(video.status).toBe(VideoStatus.PROCESSED);
-      expect(video.mimeType).toBe("video/mp4");
-      expect(video.size).toBe(1024000);
+      expect(video.videoFilename).toBe("video123.mp4");
+      expect(video.videoMimeType).toBe("video/mp4");
+      expect(video.videoSize).toBe(1024000);
+      expect(video.videoManifestUrl).toBe("https://example.com/manifest/video123.m3u8");
+      expect(video.thumbFilename).toBe("thumb123.jpg");
+      expect(video.thumbMimeType).toBe("image/jpeg");
+      expect(video.thumbSize).toBe(51200);
+      expect(video.thumbUrl).toBe("https://example.com/thumbs/thumb123.jpg");
       expect(video.createdAt).toEqual(new Date("2024-01-01"));
       expect(video.updatedAt).toEqual(new Date("2024-01-02"));
       expect(video.uploadedAt).toEqual(new Date("2024-01-01T10:00:00"));
@@ -42,8 +54,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.ENTERTAINMENT,
         tags: "",
         status: VideoStatus.UPLOADED,
-        mimeType: "video/webm",
-        size: 2048000,
+        videoFilename: "video456.webm",
+        videoMimeType: "video/webm",
+        videoSize: 2048000,
+        videoManifestUrl: "https://example.com/manifest/video456.m3u8",
+        thumbFilename: "thumb456.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 102400,
+        thumbUrl: "https://example.com/thumbs/thumb456.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
         uploadedAt: new Date(),
@@ -62,8 +80,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.MUSIC,
         tags: "music",
         status: VideoStatus.PROCESSING,
-        mimeType: "video/avi",
-        size: 512000,
+        videoFilename: "video789.avi",
+        videoMimeType: "video/avi",
+        videoSize: 512000,
+        videoManifestUrl: "https://example.com/manifest/video789.m3u8",
+        thumbFilename: "thumb789.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb789.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
         uploadedAt: new Date(),
@@ -82,8 +106,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.SPORTS,
         tags: "football, basketball, sports",
         status: VideoStatus.FAILED,
-        mimeType: "video/mov",
-        size: 4096000,
+        videoFilename: "video000.mov",
+        videoMimeType: "video/mov",
+        videoSize: 4096000,
+        videoManifestUrl: "https://example.com/manifest/video000.m3u8",
+        thumbFilename: "thumb000.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 204800,
+        thumbUrl: "https://example.com/thumbs/thumb000.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
         uploadedAt: new Date(),
@@ -111,8 +141,14 @@ describe("VideosMapper", () => {
           category: VideoCategory.OTHER,
           tags: "test",
           status: status,
-          mimeType: "video/mp4",
-          size: 1000,
+          videoFilename: "video.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1000,
+          videoManifestUrl: "https://example.com/manifest/video.m3u8",
+          thumbFilename: "thumb.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 1000,
+          thumbUrl: "https://example.com/thumbs/thumb.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
           uploadedAt: new Date(),
@@ -145,8 +181,14 @@ describe("VideosMapper", () => {
           category: category,
           tags: "test",
           status: VideoStatus.UPLOADED,
-          mimeType: "video/mp4",
-          size: 1000,
+          videoFilename: "video.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1000,
+          videoManifestUrl: "https://example.com/manifest/video.m3u8",
+          thumbFilename: "thumb.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 1000,
+          thumbUrl: "https://example.com/thumbs/thumb.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
           uploadedAt: new Date(),
@@ -168,8 +210,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: ["javascript", "typescript", "testing"],
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt: new Date("2024-01-01"),
         updatedAt: new Date("2024-01-02"),
         uploadedAt: new Date("2024-01-01T10:00:00"),
@@ -184,8 +232,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,typescript,testing",
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt: new Date("2024-01-01").getTime(),
         updatedAt: new Date("2024-01-02").getTime(),
         uploadedAt: new Date("2024-01-01T10:00:00").getTime(),
@@ -198,8 +252,12 @@ describe("VideosMapper", () => {
         title: "Video Without Tags",
         category: VideoCategory.ENTERTAINMENT,
         tags: [],
-        mimeType: "video/webm",
-        size: 2048000,
+        videoFilename: "video456.webm",
+        videoMimeType: "video/webm",
+        videoSize: 2048000,
+        thumbFilename: "thumb456.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 102400,
       });
 
       const persistence = VideosMapper.toPersistence(video);
@@ -213,8 +271,12 @@ describe("VideosMapper", () => {
         title: "Video With Single Tag",
         category: VideoCategory.MUSIC,
         tags: ["music"],
-        mimeType: "video/avi",
-        size: 512000,
+        videoFilename: "video789.avi",
+        videoMimeType: "video/avi",
+        videoSize: 512000,
+        thumbFilename: "thumb789.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
       });
 
       const persistence = VideosMapper.toPersistence(video);
@@ -228,8 +290,12 @@ describe("VideosMapper", () => {
         title: "Video With Multiple Tags",
         category: VideoCategory.SPORTS,
         tags: ["football", "basketball", "sports"],
-        mimeType: "video/mov",
-        size: 4096000,
+        videoFilename: "video000.mov",
+        videoMimeType: "video/mov",
+        videoSize: 4096000,
+        thumbFilename: "thumb000.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 204800,
       });
 
       const persistence = VideosMapper.toPersistence(video);
@@ -242,8 +308,12 @@ describe("VideosMapper", () => {
         id: "video-111",
         title: "Minimal Video",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video111.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb111.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 1000,
       });
 
       const persistence = VideosMapper.toPersistence(video);
@@ -251,8 +321,12 @@ describe("VideosMapper", () => {
       expect(persistence.id).toBe("video-111");
       expect(persistence.title).toBe("Minimal Video");
       expect(persistence.category).toBe(VideoCategory.OTHER);
-      expect(persistence.mimeType).toBe("video/mp4");
-      expect(persistence.size).toBe(1000);
+      expect(persistence.videoMimeType).toBe("video/mp4");
+      expect(persistence.videoSize).toBe(1000);
+      expect(persistence.videoFilename).toBe("video111.mp4");
+      expect(persistence.thumbMimeType).toBe("image/jpeg");
+      expect(persistence.thumbSize).toBe(1000);
+      expect(persistence.thumbFilename).toBe("thumb111.jpg");
       expect(persistence.tags).toBe("");
       expect(persistence).toHaveProperty("createdAt");
       expect(persistence).toHaveProperty("updatedAt");
@@ -269,8 +343,14 @@ describe("VideosMapper", () => {
         category: VideoCategory.TECHNOLOGY,
         tags: ["typescript", "testing", "node"],
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 5242880,
+        videoFilename: "roundtrip.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 5242880,
+        videoManifestUrl: "https://example.com/manifest/roundtrip.m3u8",
+        thumbFilename: "thumb-roundtrip.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 256000,
+        thumbUrl: "https://example.com/thumbs/thumb-roundtrip.jpg",
         createdAt: new Date("2024-02-01"),
         updatedAt: new Date("2024-02-02"),
         uploadedAt: new Date("2024-02-01T12:00:00"),
@@ -285,8 +365,10 @@ describe("VideosMapper", () => {
       expect(restoredVideo.category).toBe(originalVideo.category);
       expect(restoredVideo.tags).toEqual(originalVideo.tags);
       expect(restoredVideo.status).toBe(originalVideo.status);
-      expect(restoredVideo.mimeType).toBe(originalVideo.mimeType);
-      expect(restoredVideo.size).toBe(originalVideo.size);
+      expect(restoredVideo.videoMimeType).toBe(originalVideo.videoMimeType);
+      expect(restoredVideo.videoSize).toBe(originalVideo.videoSize);
+      expect(restoredVideo.thumbMimeType).toBe(originalVideo.thumbMimeType);
+      expect(restoredVideo.thumbSize).toBe(originalVideo.thumbSize);
       expect(restoredVideo.createdAt).toEqual(originalVideo.createdAt.getTime());
       expect(restoredVideo.updatedAt).toEqual(originalVideo.updatedAt.getTime());
       expect(restoredVideo.uploadedAt).toEqual(originalVideo.uploadedAt.getTime());

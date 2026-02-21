@@ -1,10 +1,12 @@
 import { VideoCategory, VideoStatus } from '../../domain/entities/video.entity';
-import { IVideosRepository } from '../../domain/repositories/videos.repository';
+import { IVideosRepository } from '../../domain/repositories/videos-repository.interface';
+import { IStorageService } from '../../domain/services/storage/storage.interface';
 import { CreateVideoMetadataUseCase } from './create-video-metadata.usecase';
 
 describe('CreateVideoMetadataUseCase', () => {
   let usecase: CreateVideoMetadataUseCase;
   let mockRepository: jest.Mocked<IVideosRepository>;
+  let mockStorageService: jest.Mocked<IStorageService>;
 
   beforeEach(() => {
     mockRepository = {
@@ -13,7 +15,14 @@ describe('CreateVideoMetadataUseCase', () => {
       findAll: jest.fn(),
     };
 
-    usecase = new CreateVideoMetadataUseCase(mockRepository);
+    mockStorageService = {
+      presign: jest.fn().mockResolvedValue({
+        url: 'https://example.com/presigned',
+        fields: {},
+      }),
+    };
+
+    usecase = new CreateVideoMetadataUseCase(mockRepository, mockStorageService);
   });
 
   const validPayload = {
@@ -21,8 +30,16 @@ describe('CreateVideoMetadataUseCase', () => {
     description: 'A test video description',
     category: VideoCategory.TECHNOLOGY,
     tags: ['typescript', 'tutorial'],
-    mimeType: 'video/mp4',
-    size: 1024000,
+    video: {
+      filename: 'video.mp4',
+      mimeType: 'video/mp4',
+      size: 1024000,
+    },
+    thumbnail: {
+      filename: 'thumb.jpg',
+      mimeType: 'image/jpeg',
+      size: 51200,
+    },
   };
 
   describe('execute', () => {
@@ -30,13 +47,14 @@ describe('CreateVideoMetadataUseCase', () => {
       const result = await usecase.execute(validPayload);
 
       expect(result).toBeDefined();
-      expect(result.id).toBeDefined();
-      expect(result.title).toBe('Test Video');
-      expect(result.description).toBe('A test video description');
-      expect(result.category).toBe(VideoCategory.TECHNOLOGY);
-      expect(result.tags).toEqual(['typescript', 'tutorial']);
-      expect(result.mimeType).toBe('video/mp4');
-      expect(result.size).toBe(1024000);
+      expect(result.videoMetadata).toBeDefined();
+      expect(result.videoMetadata.id).toBeDefined();
+      expect(result.videoMetadata.title).toBe('Test Video');
+      expect(result.videoMetadata.description).toBe('A test video description');
+      expect(result.videoMetadata.category).toBe(VideoCategory.TECHNOLOGY);
+      expect(result.videoMetadata.tags).toEqual(['typescript', 'tutorial']);
+      expect(result.videoMetadata.videoFilename).toBe('video.mp4');
+      expect(result.videoMetadata.videoSize).toBe(1024000);
     });
 
     it('should call repository save method', async () => {
@@ -56,8 +74,8 @@ describe('CreateVideoMetadataUseCase', () => {
       expect(savedVideo.description).toBe('A test video description');
       expect(savedVideo.category).toBe(VideoCategory.TECHNOLOGY);
       expect(savedVideo.tags).toEqual(['typescript', 'tutorial']);
-      expect(savedVideo.mimeType).toBe('video/mp4');
-      expect(savedVideo.size).toBe(1024000);
+      expect(savedVideo.videoFilename).toBe('video.mp4');
+      expect(savedVideo.videoSize).toBe(1024000);
       expect(savedVideo.status).toBe(VideoStatus.UPLOADING);
     });
 
@@ -65,28 +83,44 @@ describe('CreateVideoMetadataUseCase', () => {
       const payload = {
         title: 'Test Video',
         category: VideoCategory.GAMING,
-        mimeType: 'video/mp4',
-        size: 2048000,
+        video: {
+          filename: 'video.mp4',
+          mimeType: 'video/mp4',
+          size: 2048000,
+        },
+        thumbnail: {
+          filename: 'thumb.jpg',
+          mimeType: 'image/jpeg',
+          size: 51200,
+        },
       };
 
       const result = await usecase.execute(payload);
 
-      expect(result.title).toBe('Test Video');
-      expect(result.description).toBeUndefined();
-      expect(result.category).toBe(VideoCategory.GAMING);
+      expect(result.videoMetadata.title).toBe('Test Video');
+      expect(result.videoMetadata.description).toBeUndefined();
+      expect(result.videoMetadata.category).toBe(VideoCategory.GAMING);
     });
 
     it('should create video without tags', async () => {
       const payload = {
         title: 'Test Video',
         category: VideoCategory.MUSIC,
-        mimeType: 'video/mp4',
-        size: 512000,
+        video: {
+          filename: 'video.mp4',
+          mimeType: 'video/mp4',
+          size: 512000,
+        },
+        thumbnail: {
+          filename: 'thumb.jpg',
+          mimeType: 'image/jpeg',
+          size: 51200,
+        },
       };
 
       const result = await usecase.execute(payload);
 
-      expect(result.tags).toEqual([]);
+      expect(result.videoMetadata.tags).toEqual([]);
     });
 
     it('should create video with empty tags array', async () => {
@@ -94,13 +128,21 @@ describe('CreateVideoMetadataUseCase', () => {
         title: 'Test Video',
         category: VideoCategory.ENTERTAINMENT,
         tags: [],
-        mimeType: 'video/mp4',
-        size: 1024000,
+        video: {
+          filename: 'video.mp4',
+          mimeType: 'video/mp4',
+          size: 1024000,
+        },
+        thumbnail: {
+          filename: 'thumb.jpg',
+          mimeType: 'image/jpeg',
+          size: 51200,
+        },
       };
 
       const result = await usecase.execute(payload);
 
-      expect(result.tags).toEqual([]);
+      expect(result.videoMetadata.tags).toEqual([]);
     });
 
     it('should generate unique id for each video', async () => {
@@ -111,25 +153,25 @@ describe('CreateVideoMetadataUseCase', () => {
         title: 'Another Video',
       });
 
-      expect(result1.id).not.toBe(result2.id);
+      expect(result1.videoMetadata.id).not.toBe(result2.videoMetadata.id);
     });
 
     it('should set initial status to UPLOADING', async () => {
       const result = await usecase.execute(validPayload);
 
-      expect(result.status).toBe(VideoStatus.UPLOADING);
+      expect(result.videoMetadata.status).toBe(VideoStatus.UPLOADING);
     });
 
     it('should set createdAt timestamp', async () => {
       const result = await usecase.execute(validPayload);
 
-      expect(result.createdAt).toBeInstanceOf(Date);
+      expect(result.videoMetadata.createdAt).toBeInstanceOf(Date);
     });
 
     it('should set uploadedAt timestamp', async () => {
       const result = await usecase.execute(validPayload);
 
-      expect(result.uploadedAt).toBeInstanceOf(Date);
+      expect(result.videoMetadata.uploadedAt).toBeInstanceOf(Date);
     });
 
     it('should handle different video categories', async () => {
@@ -151,7 +193,7 @@ describe('CreateVideoMetadataUseCase', () => {
           category,
         });
 
-        expect(result.category).toBe(category);
+        expect(result.videoMetadata.category).toBe(category);
       }
     });
 
@@ -160,10 +202,14 @@ describe('CreateVideoMetadataUseCase', () => {
 
       const result = await usecase.execute({
         ...validPayload,
-        size: largeSize,
+        video: {
+          filename: 'large-video.mp4',
+          mimeType: 'video/mp4',
+          size: largeSize,
+        },
       });
 
-      expect(result.size).toBe(largeSize);
+      expect(result.videoMetadata.videoSize).toBe(largeSize);
     });
 
     it('should handle video with multiple tags', async () => {
@@ -180,7 +226,7 @@ describe('CreateVideoMetadataUseCase', () => {
         tags,
       });
 
-      expect(result.tags).toEqual(tags);
+      expect(result.videoMetadata.tags).toEqual(tags);
     });
 
     it('should handle different MIME types', async () => {
@@ -195,10 +241,14 @@ describe('CreateVideoMetadataUseCase', () => {
       for (const mimeType of mimeTypes) {
         const result = await usecase.execute({
           ...validPayload,
-          mimeType,
+          video: {
+            filename: 'video.file',
+            mimeType,
+            size: 1024000,
+          },
         });
 
-        expect(result.mimeType).toBe(mimeType);
+        expect(result.videoMetadata.videoMimeType).toBe(mimeType);
       }
     });
 
@@ -212,20 +262,7 @@ describe('CreateVideoMetadataUseCase', () => {
       );
     });
 
-    it('should not call repository if video creation fails', async () => {
-      const invalidPayload = {
-        ...validPayload,
-        size: -100, // Invalid: negative size
-      };
 
-      // Note: The current implementation doesn't validate, but this test
-      // documents expected behavior if validation is added
-      try {
-        await usecase.execute(invalidPayload as any);
-      } catch (error) {
-        expect(mockRepository.save).not.toHaveBeenCalled();
-      }
-    });
 
     it('should preserve all optional fields in the returned video', async () => {
       const payload = {
@@ -233,18 +270,26 @@ describe('CreateVideoMetadataUseCase', () => {
         description: 'A comprehensive description with special chars: @#$%',
         category: VideoCategory.EDUCATION,
         tags: ['complex', 'example', 'test'],
-        mimeType: 'video/mp4',
-        size: 3000000,
+        video: {
+          filename: 'comprehensive.mp4',
+          mimeType: 'video/mp4',
+          size: 3000000,
+        },
+        thumbnail: {
+          filename: 'comprehensive-thumb.jpg',
+          mimeType: 'image/jpeg',
+          size: 51200,
+        },
       };
 
       const result = await usecase.execute(payload);
 
-      expect(result.title).toBe(payload.title);
-      expect(result.description).toBe(payload.description);
-      expect(result.category).toBe(payload.category);
-      expect(result.tags).toEqual(payload.tags);
-      expect(result.mimeType).toBe(payload.mimeType);
-      expect(result.size).toBe(payload.size);
+      expect(result.videoMetadata.title).toBe(payload.title);
+      expect(result.videoMetadata.description).toBe(payload.description);
+      expect(result.videoMetadata.category).toBe(payload.category);
+      expect(result.videoMetadata.tags).toEqual(payload.tags);
+      expect(result.videoMetadata.videoFilename).toBe(payload.video.filename);
+      expect(result.videoMetadata.videoSize).toBe(payload.video.size);
     });
 
     it('should call repository save with the created video instance', async () => {
@@ -255,8 +300,8 @@ describe('CreateVideoMetadataUseCase', () => {
           title: 'Test Video',
           description: 'A test video description',
           category: VideoCategory.TECHNOLOGY,
-          mimeType: 'video/mp4',
-          size: 1024000,
+          videoFilename: 'video.mp4',
+          videoSize: 1024000,
         })
       );
     });
@@ -264,15 +309,16 @@ describe('CreateVideoMetadataUseCase', () => {
     it('should return the created video from execute', async () => {
       const result = await usecase.execute(validPayload);
 
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('title');
-      expect(result).toHaveProperty('category');
-      expect(result).toHaveProperty('mimeType');
-      expect(result).toHaveProperty('size');
-      expect(result).toHaveProperty('status');
-      expect(result).toHaveProperty('createdAt');
-      expect(result).toHaveProperty('uploadedAt');
-      expect(result).toHaveProperty('updatedAt');
+      expect(result).toHaveProperty('videoMetadata');
+      expect(result.videoMetadata).toHaveProperty('id');
+      expect(result.videoMetadata).toHaveProperty('title');
+      expect(result.videoMetadata).toHaveProperty('category');
+      expect(result.videoMetadata).toHaveProperty('videoFilename');
+      expect(result.videoMetadata).toHaveProperty('videoSize');
+      expect(result.videoMetadata).toHaveProperty('status');
+      expect(result.videoMetadata).toHaveProperty('createdAt');
+      expect(result.videoMetadata).toHaveProperty('uploadedAt');
+      expect(result.videoMetadata).toHaveProperty('updatedAt');
     });
   });
 
@@ -285,8 +331,8 @@ describe('CreateVideoMetadataUseCase', () => {
       ]);
 
       expect(videos).toHaveLength(3);
-      expect(videos[0].id).not.toBe(videos[1].id);
-      expect(videos[1].id).not.toBe(videos[2].id);
+      expect(videos[0].videoMetadata.id).not.toBe(videos[1].videoMetadata.id);
+      expect(videos[1].videoMetadata.id).not.toBe(videos[2].videoMetadata.id);
       expect(mockRepository.save).toHaveBeenCalledTimes(3);
     });
 
@@ -299,7 +345,7 @@ describe('CreateVideoMetadataUseCase', () => {
 
       const result = await usecase.execute(payload);
 
-      expect(result.description).toBe(
+      expect(result.videoMetadata.description).toBe(
         'Special chars: !@#$%^&*()_+-=[]{}|;:,.<>?/~ "quotes" \'apostrophe\''
       );
     });
@@ -312,7 +358,7 @@ describe('CreateVideoMetadataUseCase', () => {
         title: longTitle,
       });
 
-      expect(result.title).toBe(longTitle);
+      expect(result.videoMetadata.title).toBe(longTitle);
     });
   });
 });

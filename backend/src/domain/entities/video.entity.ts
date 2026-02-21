@@ -25,8 +25,14 @@ type VideoProps = {
   category: VideoCategory
   tags?: string[];
   status?: VideoStatus;
-  mimeType: string;
-  size: number;
+  videoFilename: string;
+  videoMimeType: string;
+  videoSize: number;
+  videoManifestUrl?: string;
+  thumbFilename: string;
+  thumbMimeType: string;
+  thumbSize: number;
+  thumbUrl?: string;
   uploadedAt?: Date
   createdAt?: Date
   updatedAt?: Date
@@ -34,8 +40,14 @@ type VideoProps = {
 
 export class Video {
   private readonly _id: string;
-  private readonly _mimeType: string;
-  private readonly _size: number
+  private readonly _videoFilename: string;
+  private readonly _videoMimeType: string;
+  private readonly _videoSize: number;
+  private readonly _videoManifestUrl?: string;
+  private readonly _thumbFilename: string;
+  private readonly _thumbMimeType: string;
+  private readonly _thumbSize: number;
+  private readonly _thumbUrl?: string;
   private _title: string;
   private _description?: string;
   private _category: VideoCategory
@@ -51,8 +63,14 @@ export class Video {
     this._description = props.description;
     this._category = props.category;
     this._tags = props.tags || [];
-    this._mimeType = props.mimeType;
-    this._size = props.size;
+    this._videoFilename = props.videoFilename;
+    this._videoMimeType = props.videoMimeType;
+    this._videoSize = props.videoSize;
+    this._videoManifestUrl = props.videoManifestUrl;
+    this._thumbFilename = props.thumbFilename;
+    this._thumbMimeType = props.thumbMimeType;
+    this._thumbSize = props.thumbSize;
+    this._thumbUrl = props.thumbUrl;
     this._uploadedAt = props.uploadedAt || new Date();
     this._createdAt = props.createdAt || new Date();
     this._updatedAt = props.updatedAt || new Date();
@@ -83,16 +101,40 @@ export class Video {
     return this._tags;
   }
 
-  get mimeType(): string {
-    return this._mimeType;
+  get videoFilename(): string {
+    return this._videoFilename;
+  }
+
+  get videoMimeType(): string {
+    return this._videoMimeType;
+  }
+
+  get videoManifestUrl(): string | undefined {
+    return this._videoManifestUrl;
+  }
+
+  get thumbFilename(): string {
+    return this._thumbFilename;
+  }
+
+  get thumbMimeType(): string {
+    return this._thumbMimeType;
+  }
+
+  get thumbSize(): number {
+    return this._thumbSize;
+  }
+
+  get thumbUrl(): string | undefined {
+    return this._thumbUrl;
   }
 
   get status(): VideoStatus {
     return this._status;
   }
 
-  get size(): number {
-    return this._size;
+  get videoSize(): number {
+    return this._videoSize;
   }
 
   get uploadedAt(): Date {

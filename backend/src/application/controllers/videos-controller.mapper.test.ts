@@ -15,8 +15,14 @@ describe("VideosControllerMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: ["javascript", "typescript", "testing"],
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt,
         updatedAt,
         uploadedAt,
@@ -31,8 +37,14 @@ describe("VideosControllerMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: ["javascript", "typescript", "testing"],
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt: createdAt.toISOString(),
         updatedAt: updatedAt.toISOString(),
         uploadedAt: uploadedAt.toISOString(),
@@ -45,8 +57,12 @@ describe("VideosControllerMapper", () => {
         id: "video-dates",
         title: "Video",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
         createdAt: now,
         updatedAt: now,
         uploadedAt: now,
@@ -67,8 +83,12 @@ describe("VideosControllerMapper", () => {
         id: "video-no-desc",
         title: "Video Without Description",
         category: VideoCategory.MUSIC,
-        mimeType: "video/webm",
-        size: 2048000,
+        videoFilename: "video.webm",
+        videoMimeType: "video/webm",
+        videoSize: 2048000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -92,8 +112,12 @@ describe("VideosControllerMapper", () => {
           id: `video-${status}`,
           title: `Video with ${status}`,
           category: VideoCategory.OTHER,
-          mimeType: "video/mp4",
-          size: 1000,
+          videoFilename: "video.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1000,
+          thumbFilename: "thumb.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 50000,
           status,
         });
 
@@ -121,8 +145,12 @@ describe("VideosControllerMapper", () => {
           id: `video-${category}`,
           title: `Video in ${category}`,
           category,
-          mimeType: "video/mp4",
-          size: 1000,
+          videoFilename: "video.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1000,
+          thumbFilename: "thumb.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 50000,
         });
 
         const httpResponse = VideosControllerMapper.toHttp(video);
@@ -138,8 +166,12 @@ describe("VideosControllerMapper", () => {
         description: "Exact Description",
         category: VideoCategory.ENTERTAINMENT,
         tags: ["tag1", "tag2", "tag3"],
-        mimeType: "video/avi",
-        size: 5000000,
+        videoFilename: "video.avi",
+        videoMimeType: "video/avi",
+        videoSize: 5000000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
         status: VideoStatus.PROCESSING,
       });
 
@@ -148,7 +180,7 @@ describe("VideosControllerMapper", () => {
       expect(httpResponse.id).toBe("video-id-test");
       expect(httpResponse.title).toBe("Exact Title");
       expect(httpResponse.description).toBe("Exact Description");
-      expect(httpResponse.mimeType).toBe("video/avi");
+      expect(httpResponse.videoMimeType).toBe("video/avi");
     });
 
     it("should preserve numeric fields", () => {
@@ -156,14 +188,18 @@ describe("VideosControllerMapper", () => {
         id: "video-numbers",
         title: "Video with Numbers",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1572864,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1572864,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
 
-      expect(httpResponse.size).toBe(1572864);
-      expect(typeof httpResponse.size).toBe("number");
+      expect(httpResponse.videoSize).toBe(1572864);
+      expect(typeof httpResponse.videoSize).toBe("number");
     });
 
     it("should preserve tags array", () => {
@@ -173,8 +209,12 @@ describe("VideosControllerMapper", () => {
         title: "Video with Tags",
         category: VideoCategory.EDUCATION,
         tags,
-        mimeType: "video/mp4",
-        size: 2000000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 2000000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -189,8 +229,12 @@ describe("VideosControllerMapper", () => {
         title: "Video with Empty Tags",
         category: VideoCategory.OTHER,
         tags: [],
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -206,8 +250,12 @@ describe("VideosControllerMapper", () => {
         category: VideoCategory.NEWS,
         tags: ["news", "updates"],
         status: VideoStatus.UPLOADED,
-        mimeType: "video/mp4",
-        size: 3000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 3000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 25000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -219,14 +267,20 @@ describe("VideosControllerMapper", () => {
       expect(httpResponse).toHaveProperty("category");
       expect(httpResponse).toHaveProperty("tags");
       expect(httpResponse).toHaveProperty("status");
-      expect(httpResponse).toHaveProperty("mimeType");
-      expect(httpResponse).toHaveProperty("size");
+      expect(httpResponse).toHaveProperty("videoFilename");
+      expect(httpResponse).toHaveProperty("videoMimeType");
+      expect(httpResponse).toHaveProperty("videoSize");
+      expect(httpResponse).toHaveProperty("videoManifestUrl");
+      expect(httpResponse).toHaveProperty("thumbFilename");
+      expect(httpResponse).toHaveProperty("thumbMimeType");
+      expect(httpResponse).toHaveProperty("thumbSize");
+      expect(httpResponse).toHaveProperty("thumbUrl");
       expect(httpResponse).toHaveProperty("createdAt");
       expect(httpResponse).toHaveProperty("updatedAt");
       expect(httpResponse).toHaveProperty("uploadedAt");
 
-      // Verify property count (11 properties)
-      expect(Object.keys(httpResponse)).toHaveLength(11);
+      // Verify property count (17 properties)
+      expect(Object.keys(httpResponse)).toHaveLength(17);
     });
 
     it("should not modify original Video entity", () => {
@@ -235,8 +289,12 @@ describe("VideosControllerMapper", () => {
         id: "video-immutable",
         title: "Original Title",
         category: VideoCategory.TECHNOLOGY,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
         createdAt,
       });
 
@@ -258,8 +316,12 @@ describe("VideosControllerMapper", () => {
         id: "video-dates-scenario",
         title: "Date Scenarios",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
         createdAt: pastDate,
         updatedAt: recentDate,
         uploadedAt: futureDate,
@@ -278,13 +340,17 @@ describe("VideosControllerMapper", () => {
         id: "video-large",
         title: "Large Video",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: largeSize,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: largeSize,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
 
-      expect(httpResponse.size).toBe(largeSize);
+      expect(httpResponse.videoSize).toBe(largeSize);
     });
 
     it("should handle minimal video creation", () => {
@@ -292,15 +358,19 @@ describe("VideosControllerMapper", () => {
         id: "video-minimal",
         title: "Minimal",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
 
       expect(httpResponse.id).toBe("video-minimal");
       expect(httpResponse.title).toBe("Minimal");
-      expect(httpResponse.size).toBe(1);
+      expect(httpResponse.videoSize).toBe(1);
       expect(httpResponse.createdAt).toBeDefined();
       expect(httpResponse.updatedAt).toBeDefined();
       expect(httpResponse.uploadedAt).toBeDefined();
@@ -315,8 +385,12 @@ describe("VideosControllerMapper", () => {
         title: specialTitle,
         description: specialDescription,
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -332,8 +406,12 @@ describe("VideosControllerMapper", () => {
         title: "Video with Special Tags",
         category: VideoCategory.TECHNOLOGY,
         tags,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);
@@ -349,8 +427,12 @@ describe("VideosControllerMapper", () => {
         category: VideoCategory.ENTERTAINMENT,
         tags: ["json", "serialization"],
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 2048,
+        videoFilename: "video.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 2048,
+        thumbFilename: "thumb.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 50000,
       });
 
       const httpResponse = VideosControllerMapper.toHttp(video);

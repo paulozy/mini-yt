@@ -18,16 +18,22 @@ describe("Drizzle Schema - Videos Table", () => {
       expect(columnNames).toContain("category");
       expect(columnNames).toContain("tags");
       expect(columnNames).toContain("status");
-      expect(columnNames).toContain("mimeType");
-      expect(columnNames).toContain("size");
+      expect(columnNames).toContain("videoFilename");
+      expect(columnNames).toContain("videoMimeType");
+      expect(columnNames).toContain("videoSize");
+      expect(columnNames).toContain("videoManifestUrl");
+      expect(columnNames).toContain("thumbFilename");
+      expect(columnNames).toContain("thumbMimeType");
+      expect(columnNames).toContain("thumbSize");
+      expect(columnNames).toContain("thumbUrl");
       expect(columnNames).toContain("uploadedAt");
       expect(columnNames).toContain("createdAt");
       expect(columnNames).toContain("updatedAt");
     });
 
-    it("should have exactly 11 columns", () => {
+    it("should have exactly 17 columns", () => {
       const columns = getTableColumns(videosTable);
-      expect(Object.keys(columns)).toHaveLength(11);
+      expect(Object.keys(columns)).toHaveLength(17);
     });
   });
 
@@ -69,13 +75,13 @@ describe("Drizzle Schema - Videos Table", () => {
 
     it("should have mimeType as non-nullable", () => {
       const columns = getTableColumns(videosTable);
-      expect(columns.mimeType.notNull).toBe(true);
+      expect(columns.videoMimeType.notNull).toBe(true);
     });
 
     it("should have size as non-nullable integer", () => {
       const columns = getTableColumns(videosTable);
-      expect(columns.size.dataType).toBe("number");
-      expect(columns.size.notNull).toBe(true);
+      expect(columns.videoSize.dataType).toBe("number");
+      expect(columns.videoSize.notNull).toBe(true);
     });
 
     it("should have uploadedAt as non-nullable integer", () => {
@@ -120,14 +126,15 @@ describe("Drizzle Schema - Videos Table", () => {
     it("should have correct non-nullable fields count", () => {
       const columns = getTableColumns(videosTable);
       const notNullColumns = Object.values(columns).filter(col => col.notNull);
-      expect(notNullColumns.length).toBe(10);
+      expect(notNullColumns.length).toBe(14);
     });
 
-    it("should have exactly one nullable column (tags)", () => {
+    it('should exactly one nullable column (tags)', () => {
       const columns = getTableColumns(videosTable);
       const nullableColumns = Object.values(columns).filter(col => !col.notNull);
-      expect(nullableColumns).toHaveLength(1);
-      expect(nullableColumns[0].name).toBe("tags");
+      expect(nullableColumns).toHaveLength(3);
+      const nullableNames = nullableColumns.map(col => col.name).sort();
+      expect(nullableNames).toEqual(['tags', 'thumbUrl', 'videoManifestUrl']);
     });
   });
 
@@ -147,7 +154,7 @@ describe("Drizzle Schema - Videos Table", () => {
     it("should separate metadata fields from content fields", () => {
       const columns = getTableColumns(videosTable);
       const metadataFields = ["id", "status", "createdAt", "updatedAt", "uploadedAt"];
-      const contentFields = ["title", "description", "category", "tags", "mimeType", "size"];
+      const contentFields = ["title", "description", "category", "tags", "videoFilename", "videoMimeType", "videoSize", "videoManifestUrl", "thumbFilename", "thumbMimeType", "thumbSize", "thumbUrl"];
 
       metadataFields.forEach(field => {
         expect(columns).toHaveProperty(field);
@@ -163,8 +170,10 @@ describe("Drizzle Schema - Videos Table", () => {
 
       // Video identifiers and metadata
       expect(columns.id.dataType).toBe("string");
-      expect(columns.mimeType.dataType).toBe("string");
-      expect(columns.size.dataType).toBe("number");
+      expect(columns.videoMimeType.dataType).toBe("string");
+      expect(columns.videoSize.dataType).toBe("number");
+      expect(columns.thumbMimeType.dataType).toBe("string");
+      expect(columns.thumbSize.dataType).toBe("number");
 
       // Video content
       expect(columns.title.notNull).toBe(true);
@@ -183,8 +192,14 @@ describe("Drizzle Schema - Videos Table", () => {
         "category",
         "tags",
         "status",
-        "mimeType",
-        "size",
+        "videoFilename",
+        "videoMimeType",
+        "videoSize",
+        "videoManifestUrl",
+        "thumbFilename",
+        "thumbMimeType",
+        "thumbSize",
+        "thumbUrl",
         "uploadedAt",
         "createdAt",
         "updatedAt",
@@ -199,13 +214,13 @@ describe("Drizzle Schema - Videos Table", () => {
       const columns = getTableColumns(videosTable);
 
       // String dataType columns
-      const stringColumns = ["id", "title", "description", "category", "tags", "status", "mimeType"];
+      const stringColumns = ["id", "title", "description", "category", "tags", "status", "videoFilename", "videoMimeType", "videoManifestUrl", "thumbFilename", "thumbMimeType", "thumbUrl"];
       stringColumns.forEach(col => {
         expect(columns[col as keyof typeof columns].dataType).toBe("string");
       });
 
       // Number dataType columns
-      const numberColumns = ["size", "uploadedAt", "createdAt", "updatedAt"];
+      const numberColumns = ["videoSize", "thumbSize", "uploadedAt", "createdAt", "updatedAt"];
       numberColumns.forEach(col => {
         expect(columns[col as keyof typeof columns].dataType).toBe("number");
       });
@@ -221,7 +236,7 @@ describe("Drizzle Schema - Videos Table", () => {
 
     it("should enforce not-null on required fields", () => {
       const columns = getTableColumns(videosTable);
-      const requiredFields = ["title", "description", "category", "status", "mimeType", "size"];
+      const requiredFields = ["title", "description", "category", "status", "videoFilename", "videoMimeType", "videoSize", "thumbFilename", "thumbMimeType", "thumbSize"];
 
       requiredFields.forEach(field => {
         expect(columns[field as keyof typeof columns].notNull).toBe(true);

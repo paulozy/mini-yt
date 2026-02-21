@@ -22,8 +22,14 @@ describe("DrizzleVideosRepository", () => {
         category: VideoCategory.EDUCATION,
         tags: ["javascript", "testing"],
         status: VideoStatus.UPLOADED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
       });
 
       const mockInsertChain = {
@@ -40,7 +46,9 @@ describe("DrizzleVideosRepository", () => {
       expect(insertedValue.id).toBe("video-123");
       expect(insertedValue.title).toBe("Test Video");
       expect(insertedValue.tags).toBe("javascript,testing");
-      expect(insertedValue.mimeType).toBe("video/mp4");
+      expect(insertedValue.videoFilename).toBe("video123.mp4");
+      expect(insertedValue.videoMimeType).toBe("video/mp4");
+      expect(insertedValue.thumbFilename).toBe("thumb123.jpg");
     });
 
     it("should map video properties correctly when saving", async () => {
@@ -49,8 +57,12 @@ describe("DrizzleVideosRepository", () => {
         title: "Another Video",
         category: VideoCategory.MUSIC,
         tags: ["pop", "rock"],
-        mimeType: "video/webm",
-        size: 2048000,
+        videoFilename: "video456.webm",
+        videoMimeType: "video/webm",
+        videoSize: 2048000,
+        thumbFilename: "thumb456.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 102400,
         status: VideoStatus.PROCESSING,
       });
 
@@ -67,8 +79,14 @@ describe("DrizzleVideosRepository", () => {
       expect(insertedValue).toHaveProperty("description");
       expect(insertedValue).toHaveProperty("category");
       expect(insertedValue).toHaveProperty("tags");
-      expect(insertedValue).toHaveProperty("mimeType");
-      expect(insertedValue).toHaveProperty("size");
+      expect(insertedValue).toHaveProperty("videoFilename");
+      expect(insertedValue).toHaveProperty("videoMimeType");
+      expect(insertedValue).toHaveProperty("videoSize");
+      expect(insertedValue).toHaveProperty("videoManifestUrl");
+      expect(insertedValue).toHaveProperty("thumbFilename");
+      expect(insertedValue).toHaveProperty("thumbMimeType");
+      expect(insertedValue).toHaveProperty("thumbSize");
+      expect(insertedValue).toHaveProperty("thumbUrl");
       expect(insertedValue).toHaveProperty("status");
       expect(insertedValue).toHaveProperty("createdAt");
       expect(insertedValue).toHaveProperty("updatedAt");
@@ -80,8 +98,12 @@ describe("DrizzleVideosRepository", () => {
         id: "video-789",
         title: "Minimal Video",
         category: VideoCategory.OTHER,
-        mimeType: "video/avi",
-        size: 512000,
+        videoFilename: "video789.avi",
+        videoMimeType: "video/avi",
+        videoSize: 512000,
+        thumbFilename: "thumb789.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
       });
 
       const mockInsertChain = {
@@ -106,8 +128,14 @@ describe("DrizzleVideosRepository", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,testing",
         status: VideoStatus.UPLOADED,
-        mimeType: "video/mp4",
-        size: 1024000,
+        videoFilename: "video123.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1024000,
+        videoManifestUrl: "https://example.com/manifest/video123.m3u8",
+        thumbFilename: "thumb123.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 51200,
+        thumbUrl: "https://example.com/thumbs/thumb123.jpg",
         createdAt: new Date("2024-01-01"),
         updatedAt: new Date("2024-01-02"),
         uploadedAt: new Date("2024-01-01T10:00:00"),
@@ -164,8 +192,14 @@ describe("DrizzleVideosRepository", () => {
         category: VideoCategory.TECHNOLOGY,
         tags: "typescript,jest,testing",
         status: VideoStatus.PROCESSED,
-        mimeType: "video/mp4",
-        size: 5242880,
+        videoFilename: "video-complete.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 5242880,
+        videoManifestUrl: "https://example.com/manifest/video-complete.m3u8",
+        thumbFilename: "thumb-complete.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 409600,
+        thumbUrl: "https://example.com/thumbs/thumb-complete.jpg",
         createdAt: new Date("2024-02-01"),
         updatedAt: new Date("2024-02-02"),
         uploadedAt: new Date("2024-02-01T12:00:00"),
@@ -186,8 +220,8 @@ describe("DrizzleVideosRepository", () => {
       expect(result?.category).toBe(VideoCategory.TECHNOLOGY);
       expect(result?.tags).toEqual(["typescript", "jest", "testing"]);
       expect(result?.status).toBe(VideoStatus.PROCESSED);
-      expect(result?.mimeType).toBe("video/mp4");
-      expect(result?.size).toBe(5242880);
+      expect(result?.videoMimeType).toBe("video/mp4");
+      expect(result?.videoSize).toBe(5242880);
     });
   });
 
@@ -201,8 +235,14 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.EDUCATION,
           tags: "tag1,tag2",
           status: VideoStatus.UPLOADED,
-          mimeType: "video/mp4",
-          size: 1024000,
+          videoFilename: "video1.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1024000,
+          videoManifestUrl: "https://example.com/manifest/video1.m3u8",
+          thumbFilename: "thumb1.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 51200,
+          thumbUrl: "https://example.com/thumbs/thumb1.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
           uploadedAt: new Date(),
@@ -214,8 +254,14 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.ENTERTAINMENT,
           tags: "tag3,tag4",
           status: VideoStatus.PROCESSING,
-          mimeType: "video/webm",
-          size: 2048000,
+          videoFilename: "video2.webm",
+          videoMimeType: "video/webm",
+          videoSize: 2048000,
+          videoManifestUrl: "https://example.com/manifest/video2.m3u8",
+          thumbFilename: "thumb2.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 102400,
+          thumbUrl: "https://example.com/thumbs/thumb2.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
           uploadedAt: new Date(),
@@ -258,8 +304,14 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.MUSIC,
           tags: "music,pop",
           status: VideoStatus.UPLOADED,
-          mimeType: "video/mp4",
-          size: 1500000,
+          videoFilename: "video-a.mp4",
+          videoMimeType: "video/mp4",
+          videoSize: 1500000,
+          videoManifestUrl: "https://example.com/manifest/video-a.m3u8",
+          thumbFilename: "thumb-a.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 75000,
+          thumbUrl: "https://example.com/thumbs/thumb-a.jpg",
           createdAt: new Date("2024-01-01"),
           updatedAt: new Date("2024-01-02"),
           uploadedAt: new Date("2024-01-01T10:00:00"),
@@ -271,8 +323,14 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.SPORTS,
           tags: "sports,football",
           status: VideoStatus.PROCESSED,
-          mimeType: "video/avi",
-          size: 3000000,
+          videoFilename: "video-b.avi",
+          videoMimeType: "video/avi",
+          videoSize: 3000000,
+          videoManifestUrl: "https://example.com/manifest/video-b.m3u8",
+          thumbFilename: "thumb-b.jpg",
+          thumbMimeType: "image/jpeg",
+          thumbSize: 150000,
+          thumbUrl: "https://example.com/thumbs/thumb-b.jpg",
           createdAt: new Date("2024-01-05"),
           updatedAt: new Date("2024-01-06"),
           uploadedAt: new Date("2024-01-05T15:00:00"),
@@ -331,16 +389,24 @@ describe("DrizzleVideosRepository", () => {
         id: "video-1",
         title: "Video 1",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 1000,
+        videoFilename: "video1.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 1000,
+        thumbFilename: "thumb1.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 1000,
       });
 
       const video2 = Video.create({
         id: "video-2",
         title: "Video 2",
         category: VideoCategory.OTHER,
-        mimeType: "video/mp4",
-        size: 2000,
+        videoFilename: "video2.mp4",
+        videoMimeType: "video/mp4",
+        videoSize: 2000,
+        thumbFilename: "thumb2.jpg",
+        thumbMimeType: "image/jpeg",
+        thumbSize: 2000,
       });
 
       await Promise.all([repository.save(video1), repository.save(video2)]);
