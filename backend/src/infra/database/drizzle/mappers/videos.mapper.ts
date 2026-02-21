@@ -9,11 +9,11 @@ export class VideosMapper {
       category: raw.category,
       tags: raw.tags.split(","),
       status: raw.status,
-      mimeType: raw.mime_type,
+      mimeType: raw.mimeType,
       size: raw.size,
-      createdAt: raw.created_at,
-      updatedAt: raw.updated_at,
-      uploadedAt: raw.uploaded_at,
+      createdAt: raw.createdAt,
+      updatedAt: raw.updatedAt,
+      uploadedAt: raw.uploadedAt,
     });
   }
 
@@ -24,12 +24,12 @@ export class VideosMapper {
       description: video.description,
       category: video.category,
       tags: video.tags.join(","),
-      mime_type: video.mimeType,
-      size: video.size,
       status: video.status,
-      created_at: video.createdAt,
-      updated_at: video.updatedAt,
-      uploaded_at: video.uploadedAt,
+      mimeType: video.mimeType,
+      size: video.size,
+      uploadedAt: video.uploadedAt.getTime(),
+      createdAt: video.createdAt.getTime(),
+      updatedAt: video.updatedAt.getTime(),
     };
   }
 }

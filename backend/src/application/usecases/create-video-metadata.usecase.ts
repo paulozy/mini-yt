@@ -16,6 +16,7 @@ export class CreateVideoMetadataUseCase {
       mimeType: payload.mimeType,
       size: payload.size,
     });
+
     await this.videoRepository.save(videoMetadata);
 
     // TODO: pre-signed URL generation and return it here with the video metadata

@@ -1,7 +1,7 @@
 import { DrizzleDatabase } from "../infra/database/drizzle";
 import { DrizzleVideosRepository } from "../infra/database/drizzle/repositories/videos.repository";
+import { VideosController } from "./controllers/videos.controller";
 import { CreateVideoMetadataUseCase } from "./usecases/create-video-metadata.usecase";
-import { VideosController } from "./videos.controller";
 
 export function makeVideosController(): VideosController {
   const dbInstance = DrizzleDatabase.getInstance().getDb();

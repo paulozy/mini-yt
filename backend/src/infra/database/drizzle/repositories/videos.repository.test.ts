@@ -40,7 +40,7 @@ describe("DrizzleVideosRepository", () => {
       expect(insertedValue.id).toBe("video-123");
       expect(insertedValue.title).toBe("Test Video");
       expect(insertedValue.tags).toBe("javascript,testing");
-      expect(insertedValue.mime_type).toBe("video/mp4");
+      expect(insertedValue.mimeType).toBe("video/mp4");
     });
 
     it("should map video properties correctly when saving", async () => {
@@ -67,12 +67,12 @@ describe("DrizzleVideosRepository", () => {
       expect(insertedValue).toHaveProperty("description");
       expect(insertedValue).toHaveProperty("category");
       expect(insertedValue).toHaveProperty("tags");
-      expect(insertedValue).toHaveProperty("mime_type");
+      expect(insertedValue).toHaveProperty("mimeType");
       expect(insertedValue).toHaveProperty("size");
       expect(insertedValue).toHaveProperty("status");
-      expect(insertedValue).toHaveProperty("created_at");
-      expect(insertedValue).toHaveProperty("updated_at");
-      expect(insertedValue).toHaveProperty("uploaded_at");
+      expect(insertedValue).toHaveProperty("createdAt");
+      expect(insertedValue).toHaveProperty("updatedAt");
+      expect(insertedValue).toHaveProperty("uploadedAt");
     });
 
     it("should handle videos without optional fields", async () => {
@@ -106,11 +106,11 @@ describe("DrizzleVideosRepository", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,testing",
         status: VideoStatus.UPLOADED,
-        mime_type: "video/mp4",
+        mimeType: "video/mp4",
         size: 1024000,
-        created_at: new Date("2024-01-01"),
-        updated_at: new Date("2024-01-02"),
-        uploaded_at: new Date("2024-01-01T10:00:00"),
+        createdAt: new Date("2024-01-01"),
+        updatedAt: new Date("2024-01-02"),
+        uploadedAt: new Date("2024-01-01T10:00:00"),
       };
 
       const mockSelectChain = {
@@ -164,11 +164,11 @@ describe("DrizzleVideosRepository", () => {
         category: VideoCategory.TECHNOLOGY,
         tags: "typescript,jest,testing",
         status: VideoStatus.PROCESSED,
-        mime_type: "video/mp4",
+        mimeType: "video/mp4",
         size: 5242880,
-        created_at: new Date("2024-02-01"),
-        updated_at: new Date("2024-02-02"),
-        uploaded_at: new Date("2024-02-01T12:00:00"),
+        createdAt: new Date("2024-02-01"),
+        updatedAt: new Date("2024-02-02"),
+        uploadedAt: new Date("2024-02-01T12:00:00"),
       };
 
       const mockSelectChain = {
@@ -201,11 +201,11 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.EDUCATION,
           tags: "tag1,tag2",
           status: VideoStatus.UPLOADED,
-          mime_type: "video/mp4",
+          mimeType: "video/mp4",
           size: 1024000,
-          created_at: new Date(),
-          updated_at: new Date(),
-          uploaded_at: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          uploadedAt: new Date(),
         },
         {
           id: "video-2",
@@ -214,11 +214,11 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.ENTERTAINMENT,
           tags: "tag3,tag4",
           status: VideoStatus.PROCESSING,
-          mime_type: "video/webm",
+          mimeType: "video/webm",
           size: 2048000,
-          created_at: new Date(),
-          updated_at: new Date(),
-          uploaded_at: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          uploadedAt: new Date(),
         },
       ];
 
@@ -258,11 +258,11 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.MUSIC,
           tags: "music,pop",
           status: VideoStatus.UPLOADED,
-          mime_type: "video/mp4",
+          mimeType: "video/mp4",
           size: 1500000,
-          created_at: new Date("2024-01-01"),
-          updated_at: new Date("2024-01-02"),
-          uploaded_at: new Date("2024-01-01T10:00:00"),
+          createdAt: new Date("2024-01-01"),
+          updatedAt: new Date("2024-01-02"),
+          uploadedAt: new Date("2024-01-01T10:00:00"),
         },
         {
           id: "video-b",
@@ -271,11 +271,11 @@ describe("DrizzleVideosRepository", () => {
           category: VideoCategory.SPORTS,
           tags: "sports,football",
           status: VideoStatus.PROCESSED,
-          mime_type: "video/avi",
+          mimeType: "video/avi",
           size: 3000000,
-          created_at: new Date("2024-01-05"),
-          updated_at: new Date("2024-01-06"),
-          uploaded_at: new Date("2024-01-05T15:00:00"),
+          createdAt: new Date("2024-01-05"),
+          updatedAt: new Date("2024-01-06"),
+          uploadedAt: new Date("2024-01-05T15:00:00"),
         },
       ];
 

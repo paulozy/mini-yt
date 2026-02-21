@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "cb95c77d-6474-4aa4-a0e4-c1c8de2c41d5",
+  "id": "054858a9-aea7-42a3-b6bf-7b6cf037aa13",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "videos_table": {
@@ -9,7 +9,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false

@@ -11,11 +11,11 @@ describe("VideosMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,typescript,testing",
         status: VideoStatus.PROCESSED,
-        mime_type: "video/mp4",
+        mimeType: "video/mp4",
         size: 1024000,
-        created_at: new Date("2024-01-01"),
-        updated_at: new Date("2024-01-02"),
-        uploaded_at: new Date("2024-01-01T10:00:00"),
+        createdAt: new Date("2024-01-01"),
+        updatedAt: new Date("2024-01-02"),
+        uploadedAt: new Date("2024-01-01T10:00:00"),
       };
 
       const video = VideosMapper.toDomain(rawData);
@@ -42,11 +42,11 @@ describe("VideosMapper", () => {
         category: VideoCategory.ENTERTAINMENT,
         tags: "",
         status: VideoStatus.UPLOADED,
-        mime_type: "video/webm",
+        mimeType: "video/webm",
         size: 2048000,
-        created_at: new Date(),
-        updated_at: new Date(),
-        uploaded_at: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        uploadedAt: new Date(),
       };
 
       const video = VideosMapper.toDomain(rawData);
@@ -62,11 +62,11 @@ describe("VideosMapper", () => {
         category: VideoCategory.MUSIC,
         tags: "music",
         status: VideoStatus.PROCESSING,
-        mime_type: "video/avi",
+        mimeType: "video/avi",
         size: 512000,
-        created_at: new Date(),
-        updated_at: new Date(),
-        uploaded_at: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        uploadedAt: new Date(),
       };
 
       const video = VideosMapper.toDomain(rawData);
@@ -82,11 +82,11 @@ describe("VideosMapper", () => {
         category: VideoCategory.SPORTS,
         tags: "football, basketball, sports",
         status: VideoStatus.FAILED,
-        mime_type: "video/mov",
+        mimeType: "video/mov",
         size: 4096000,
-        created_at: new Date(),
-        updated_at: new Date(),
-        uploaded_at: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        uploadedAt: new Date(),
       };
 
       const video = VideosMapper.toDomain(rawData);
@@ -111,11 +111,11 @@ describe("VideosMapper", () => {
           category: VideoCategory.OTHER,
           tags: "test",
           status: status,
-          mime_type: "video/mp4",
+          mimeType: "video/mp4",
           size: 1000,
-          created_at: new Date(),
-          updated_at: new Date(),
-          uploaded_at: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          uploadedAt: new Date(),
         };
 
         const video = VideosMapper.toDomain(rawData);
@@ -145,11 +145,11 @@ describe("VideosMapper", () => {
           category: category,
           tags: "test",
           status: VideoStatus.UPLOADED,
-          mime_type: "video/mp4",
+          mimeType: "video/mp4",
           size: 1000,
-          created_at: new Date(),
-          updated_at: new Date(),
-          uploaded_at: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          uploadedAt: new Date(),
         };
 
         const video = VideosMapper.toDomain(rawData);
@@ -184,11 +184,11 @@ describe("VideosMapper", () => {
         category: VideoCategory.EDUCATION,
         tags: "javascript,typescript,testing",
         status: VideoStatus.PROCESSED,
-        mime_type: "video/mp4",
+        mimeType: "video/mp4",
         size: 1024000,
-        created_at: new Date("2024-01-01"),
-        updated_at: new Date("2024-01-02"),
-        uploaded_at: new Date("2024-01-01T10:00:00"),
+        createdAt: new Date("2024-01-01").getTime(),
+        updatedAt: new Date("2024-01-02").getTime(),
+        uploadedAt: new Date("2024-01-01T10:00:00").getTime(),
       });
     });
 
@@ -251,12 +251,12 @@ describe("VideosMapper", () => {
       expect(persistence.id).toBe("video-111");
       expect(persistence.title).toBe("Minimal Video");
       expect(persistence.category).toBe(VideoCategory.OTHER);
-      expect(persistence.mime_type).toBe("video/mp4");
+      expect(persistence.mimeType).toBe("video/mp4");
       expect(persistence.size).toBe(1000);
       expect(persistence.tags).toBe("");
-      expect(persistence).toHaveProperty("created_at");
-      expect(persistence).toHaveProperty("updated_at");
-      expect(persistence).toHaveProperty("uploaded_at");
+      expect(persistence).toHaveProperty("createdAt");
+      expect(persistence).toHaveProperty("updatedAt");
+      expect(persistence).toHaveProperty("uploadedAt");
     });
   });
 
@@ -287,9 +287,9 @@ describe("VideosMapper", () => {
       expect(restoredVideo.status).toBe(originalVideo.status);
       expect(restoredVideo.mimeType).toBe(originalVideo.mimeType);
       expect(restoredVideo.size).toBe(originalVideo.size);
-      expect(restoredVideo.createdAt).toEqual(originalVideo.createdAt);
-      expect(restoredVideo.updatedAt).toEqual(originalVideo.updatedAt);
-      expect(restoredVideo.uploadedAt).toEqual(originalVideo.uploadedAt);
+      expect(restoredVideo.createdAt).toEqual(originalVideo.createdAt.getTime());
+      expect(restoredVideo.updatedAt).toEqual(originalVideo.updatedAt.getTime());
+      expect(restoredVideo.uploadedAt).toEqual(originalVideo.uploadedAt.getTime());
     });
   });
 });

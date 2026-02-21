@@ -1,5 +1,5 @@
 CREATE TABLE `videos_table` (
-	`id` integer PRIMARY KEY NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`title` text NOT NULL,
 	`description` text NOT NULL,
 	`category` text NOT NULL,

@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import z from "zod";
-import { createVideoMetadataSchema } from "./dtos/create-video-metadata.dto";
-import { CreateVideoMetadataUseCase } from "./usecases/create-video-metadata.usecase";
+import { createVideoMetadataSchema } from "../dtos/create-video-metadata.dto";
+import { CreateVideoMetadataUseCase } from "../usecases/create-video-metadata.usecase";
+import { VideosControllerMapper } from "./videos-controller.mapper";
 
 export class VideosController {
   constructor(
@@ -21,7 +22,7 @@ export class VideosController {
 
       const videoMetadata = await this.createVideoMetadataUseCase.execute(data);
 
-      res.status(201).json(videoMetadata);
+      res.status(201).json(VideosControllerMapper.toHttp(videoMetadata));
     } catch (error) {
       console.error("Error creating video metadata:", error);
       res.status(500).json({ error: "Internal server error" });
