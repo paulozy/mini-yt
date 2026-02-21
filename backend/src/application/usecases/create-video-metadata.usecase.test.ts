@@ -1,10 +1,10 @@
 import { VideoCategory, VideoStatus } from '../../domain/entities/video.entity';
-import { IVideoRepository } from '../../domain/repositories/video.repository';
+import { IVideosRepository } from '../../domain/repositories/videos.repository';
 import { CreateVideoMetadataUseCase } from './create-video-metadata.usecase';
 
 describe('CreateVideoMetadataUseCase', () => {
   let usecase: CreateVideoMetadataUseCase;
-  let mockRepository: jest.Mocked<IVideoRepository>;
+  let mockRepository: jest.Mocked<IVideosRepository>;
 
   beforeEach(() => {
     mockRepository = {

@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { VideoCategory } from "../../domain/entities/video.entity";
 
-const createVideoMetadataSchema = z.object({
+export const createVideoMetadataSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   category: z.enum(Object.values(VideoCategory)),
@@ -11,5 +11,3 @@ const createVideoMetadataSchema = z.object({
 });
 
 export type CreateVideoMetadataDTO = z.infer<typeof createVideoMetadataSchema>;
-
-export { createVideoMetadataSchema };
