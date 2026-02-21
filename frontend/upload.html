@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Video — Mini-YT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="upload-header">
+      <a href="index.html" class="logo">Mini<span class="accent">YT</span></a>
+      <h2>Upload Video</h2>
+    </header>
+
+    <form id="upload-form" class="upload-form">
+      <!-- Title -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Enter video title" required />
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" placeholder="Describe your video..."></textarea>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option value="">Select a category</option>
+          <option value="education">Education</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="gaming">Gaming</option>
+          <option value="music">Music</option>
+          <option value="news">News</option>
+          <option value="sports">Sports</option>
+          <option value="technology">Technology</option>
+          <option value="travel">Travel</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Tags -->
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" id="tags" name="tags" placeholder="e.g. tutorial, javascript, web (comma-separated)" />
+      </div>
+
+      <!-- Thumbnail -->
+      <div class="form-group">
+        <label for="thumbnail">Thumbnail</label>
+        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" />
+      </div>
+
+      <!-- Video file -->
+      <div class="form-group">
+        <label for="video">Video File</label>
+        <input type="file" id="video" name="video" accept="video/*" />
+      </div>
+
+      <div class="form-actions">
+        <a href="index.html" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary">Publish</button>
+      </div>
+    </form>
+
+    <!-- Status message shown after submission -->
+    <p id="status-message" class="status-message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
