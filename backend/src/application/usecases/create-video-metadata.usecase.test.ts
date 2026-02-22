@@ -16,9 +16,10 @@ describe('CreateVideoMetadataUseCase', () => {
     };
 
     mockStorageService = {
-      presign: jest.fn().mockResolvedValue({
-        url: 'https://example.com/presigned',
-        fields: {},
+      presign: jest.fn().mockResolvedValue('https://example.com/presigned/thumb'),
+      initiateMultipartUpload: jest.fn().mockResolvedValue({
+        uploadId: 'test-upload-id',
+        url: 'https://example.com/presigned/video',
       }),
     };
 
@@ -319,6 +320,42 @@ describe('CreateVideoMetadataUseCase', () => {
       expect(result.videoMetadata).toHaveProperty('createdAt');
       expect(result.videoMetadata).toHaveProperty('uploadedAt');
       expect(result.videoMetadata).toHaveProperty('updatedAt');
+    });
+
+    it('should return presigned URLs for video and thumbnail', async () => {
+      const result = await usecase.execute(validPayload);
+
+      expect(result).toHaveProperty('presignedUrls');
+      expect(result.presignedUrls.video).toHaveProperty('uploadId');
+      expect(result.presignedUrls.video).toHaveProperty('url');
+      expect(result.presignedUrls.thumbnail).toHaveProperty('url');
+      expect(typeof result.presignedUrls.video.uploadId).toBe('string');
+      expect(typeof result.presignedUrls.video.url).toBe('string');
+      expect(typeof result.presignedUrls.thumbnail.url).toBe('string');
+    });
+
+    it('should call storage service to generate presigned URLs', async () => {
+      await usecase.execute(validPayload);
+
+      expect(mockStorageService.initiateMultipartUpload).toHaveBeenCalledTimes(1);
+      expect(mockStorageService.initiateMultipartUpload).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: expect.any(String),
+          filename: 'video.mp4',
+          mimeType: 'video/mp4',
+          resourceType: 'video',
+        })
+      );
+
+      expect(mockStorageService.presign).toHaveBeenCalledTimes(1);
+      expect(mockStorageService.presign).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: expect.any(String),
+          filename: 'thumb.jpg',
+          mimeType: 'image/jpeg',
+          resourceType: 'thumb',
+        })
+      );
     });
   });
 
