@@ -6,7 +6,7 @@ export class DrizzleDatabase {
   private database: ReturnType<typeof drizzle>;
 
   private constructor() {
-    this.database = drizzle(env.DB_FILE_NAME);
+    this.database = drizzle(env.DATABASE.DB_FILE_NAME);
   }
 
   public static getInstance(): DrizzleDatabase {

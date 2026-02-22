@@ -20,9 +20,15 @@ export class VideosController {
         return;
       }
 
-      const videoMetadata = await this.createVideoMetadataUseCase.execute(data);
+      const {
+        presignedUrls,
+        videoMetadata
+      } = await this.createVideoMetadataUseCase.execute(data);
 
-      res.status(201).json(VideosControllerMapper.toHttp(videoMetadata));
+      res.status(201).json({
+        video: VideosControllerMapper.toHttp(videoMetadata),
+        presignedUrls,
+      });
     } catch (error) {
       console.error("Error creating video metadata:", error);
       res.status(500).json({ error: "Internal server error" });

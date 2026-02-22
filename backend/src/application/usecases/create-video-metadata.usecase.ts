@@ -4,13 +4,21 @@ import { IVideosRepository } from "../../domain/repositories/videos-repository.i
 import { IStorageService } from "../../domain/services/storage/storage.interface";
 import { CreateVideoMetadataDTO } from "../dtos/create-video-metadata.dto";
 
+export type CreateVideoMetadataResult = {
+  videoMetadata: Video;
+  presignedUrls: {
+    video: { uploadId: string; url: string };
+    thumbnail: { url: string };
+  }
+}
+
 export class CreateVideoMetadataUseCase {
   constructor(
     private readonly videoRepository: IVideosRepository,
     private readonly storageService: IStorageService
   ) { }
 
-  async execute(payload: CreateVideoMetadataDTO): Promise<any> {
+  async execute(payload: CreateVideoMetadataDTO): Promise<CreateVideoMetadataResult> {
     const { title, description, category, tags, video, thumbnail } = payload;
 
     const videoMetadata = Video.create({
@@ -29,22 +37,24 @@ export class CreateVideoMetadataUseCase {
 
     await this.videoRepository.save(videoMetadata);
 
-    const presignedVideoUrl = await this.storageService.presign(
-      videoMetadata.id,
-      videoMetadata.videoFilename,
-      videoMetadata.videoMimeType
-    );
-    const presignedThumbnailUrl = await this.storageService.presign(
-      videoMetadata.id,
-      videoMetadata.thumbFilename,
-      videoMetadata.thumbMimeType
-    );
+    const { uploadId, url: presignedVideoUrl } = await this.storageService.initiateMultipartUpload({
+      id: videoMetadata.id,
+      filename: videoMetadata.videoFilename,
+      mimeType: videoMetadata.videoMimeType,
+      resourceType: "video",
+    })
+    const presignedThumbnailUrl = await this.storageService.presign({
+      id: videoMetadata.id,
+      filename: videoMetadata.thumbFilename,
+      mimeType: videoMetadata.thumbMimeType,
+      resourceType: "thumb",
+    });
 
     return {
       videoMetadata,
       presignedUrls: {
-        video: presignedVideoUrl,
-        thumbnail: presignedThumbnailUrl,
+        video: { uploadId, url: presignedVideoUrl },
+        thumbnail: { url: presignedThumbnailUrl },
       },
     }
   }

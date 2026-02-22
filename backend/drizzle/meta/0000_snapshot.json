@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "054858a9-aea7-42a3-b6bf-7b6cf037aa13",
+  "id": "909524ab-5f44-4739-83d1-6b08d607f2ac",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "videos_table": {
@@ -49,18 +49,60 @@
           "notNull": true,
           "autoincrement": false
         },
-        "mimeType": {
-          "name": "mimeType",
+        "videoFilename": {
+          "name": "videoFilename",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "size": {
-          "name": "size",
+        "videoMimeType": {
+          "name": "videoMimeType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "videoSize": {
+          "name": "videoSize",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "videoManifestUrl": {
+          "name": "videoManifestUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "thumbFilename": {
+          "name": "thumbFilename",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "thumbMimeType": {
+          "name": "thumbMimeType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "thumbSize": {
+          "name": "thumbSize",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "thumbUrl": {
+          "name": "thumbUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "uploadedAt": {

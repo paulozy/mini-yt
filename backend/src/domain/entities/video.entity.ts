@@ -46,8 +46,9 @@ export class Video {
   private readonly _videoManifestUrl?: string;
   private readonly _thumbFilename: string;
   private readonly _thumbMimeType: string;
-  private readonly _thumbSize: number;
-  private readonly _thumbUrl?: string;
+  private readonly _createdAt: Date
+  private _thumbUrl?: string;
+  private _thumbSize: number;
   private _title: string;
   private _description?: string;
   private _category: VideoCategory
@@ -55,7 +56,6 @@ export class Video {
   private _status: VideoStatus = VideoStatus.UPLOADING;
   private _uploadedAt: Date
   private _updatedAt: Date
-  private readonly _createdAt: Date
 
   private constructor(props: VideoProps) {
     this._id = props.id;
