@@ -24,7 +24,7 @@ export class S3StorageService implements IStorageService {
     if (uploadId) {
       const command = new UploadPartCommand({
         Bucket: env.STORAGE.S3_BUCKET_NAME,
-        Key: `${resourceType}/${id}/${filename}`,
+        Key: `${id}/video/${filename}`,
         PartNumber: part,
         UploadId: uploadId,
       });
@@ -35,7 +35,7 @@ export class S3StorageService implements IStorageService {
 
     const command = new PutObjectCommand({
       Bucket: env.STORAGE.S3_BUCKET_NAME,
-      Key: `${resourceType}/${id}/${filename}`,
+      Key: `${id}/${resourceType}/${filename}`,
       ContentType: mimeType,
     })
 
@@ -49,7 +49,7 @@ export class S3StorageService implements IStorageService {
 
     const command = new CreateMultipartUploadCommand({
       Bucket: env.STORAGE.S3_BUCKET_NAME,
-      Key: `${resourceType}/${id}/${filename}`,
+      Key: `${id}/${resourceType}/${filename}`,
       ContentType: mimeType,
     });
 
